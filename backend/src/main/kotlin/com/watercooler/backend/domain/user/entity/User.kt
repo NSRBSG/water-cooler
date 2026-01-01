@@ -10,13 +10,13 @@ class User(
     val email: String,
 
     @Column(nullable = false)
-    var password: String
-) : BaseTimeEntity() {
+    var password: String,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     var role: Role = Role.USER
-
+) : BaseTimeEntity() {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null
