@@ -43,6 +43,8 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
 
     implementation("org.jsoup:jsoup:1.22.1")
+
+    implementation("com.google.genai:google-genai:1.32.0")
 }
 
 kotlin {

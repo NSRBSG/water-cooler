@@ -22,7 +22,10 @@ class NewsItem(
 
     @Column(columnDefinition = "TEXT", nullable = false)
     val content: String,
-    
+
+    @Column(columnDefinition = "TEXT")
+    var aiSummary: String? = null,
+
     val viewCount: Long = 0,
     val commentCount: Long = 0,
     val likeCount: Long = 0,
