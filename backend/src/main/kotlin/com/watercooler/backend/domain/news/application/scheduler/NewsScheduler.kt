@@ -16,7 +16,7 @@ class NewsScheduler(
         fmkoreaCrawler.crawl()
     }
 
-    @Scheduled(fixedDelay = 3600000, initialDelay = 5000)
+    @Scheduled(fixedDelay = 600000, initialDelay = 10000)
     fun runSummary() {
         aiSummaryProcessor.analyzePendingNews()
     }

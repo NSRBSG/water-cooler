@@ -1,7 +1,6 @@
 package com.watercooler.backend.domain.news.application.processor
 
 import com.google.genai.Client
-import com.google.genai.types.Blob
 import com.google.genai.types.Content
 import com.google.genai.types.Part
 import com.watercooler.backend.domain.news.entity.NewsItem
@@ -32,8 +31,6 @@ class AiSummaryProcessor(
     }
 
     private fun processItem(item: NewsItem) {
-        val imageUrls = extractImageUrls(item.content)
-
         val parts = mutableListOf<Part>()
 
         val promptText = """
@@ -43,7 +40,8 @@ class AiSummaryProcessor(
             # Instructions
             1. **Format**: Write in **plain text paragraphs only**. Do NOT use Markdown (no bold **, no headers #), no bullet points, and no intro/outro filler.
             2. **Language**: Write in the **SAME LANGUAGE** as the post content.
-            3. **Tone**: Objective, formal, and concise (Business Report style).
+            3. **Tone**: Use Dry, Objective, formal, and concise. (Business Report style) MUST use Plain Form. NEVER use polite forms.
+            4. **Facts Only**: Strictly NO speculation, public reactions, or implications unless explicitly stated in text.
             
             # Flow of the Report
             Compose the summary in a logical flow:
@@ -58,24 +56,26 @@ class AiSummaryProcessor(
 
         parts.add(Part.builder().text(promptText).build())
 
-        for (url in imageUrls) {
-            try {
-                val imageBytes = downloadImage(url)
-
-                val imagePart = Part.builder()
-                    .inlineData(
-                        Blob.builder()
-                            .data(imageBytes)
-                            .mimeType("image/jpeg")
-                            .build()
-                    )
-                    .build()
-
-                parts.add(imagePart)
-            } catch (exception: Exception) {
-                println(exception.message)
-            }
-        }
+//        val imageUrls = extractImageUrls(item.content)
+//
+//        for (url in imageUrls) {
+//            try {
+//                val imageBytes = downloadImage(url)
+//
+//                val imagePart = Part.builder()
+//                    .inlineData(
+//                        Blob.builder()
+//                            .data(imageBytes)
+//                            .mimeType("image/jpeg")
+//                            .build()
+//                    )
+//                    .build()
+//
+//                parts.add(imagePart)
+//            } catch (exception: Exception) {
+//                println(exception.message)
+//            }
+//        }
 
         val content = Content.builder()
             .parts(parts)
