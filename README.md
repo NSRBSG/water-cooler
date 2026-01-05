@@ -30,4 +30,4 @@ Google Gen Ai 이용한 News 요약 기능 구현 중, 다수의 이미지가 �
 - **변경 방식**: 이미지를 업로드하지 않고, 본문에 `이미지 경로`만 텍스트 형태로 남겨 처리.
 - **결과** : 입력 토큰 수가 획기적으로 줄어듦, 뉴스 요약의 본질을 해치지 않으면서 같은 퀄리티로 비용 효율성 확보.
 
-![Graph](https://drive.google.com/file/d/1Za2X3z_kpwJsziM-vGQEfOVIRbRCW_qP/view?usp=sharing)
+![Image](https://github.com/user-attachments/assets/c0e0ab8b-f9d8-428e-8bc2-25c204e48ccc)
