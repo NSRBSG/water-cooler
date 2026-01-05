@@ -11,12 +11,12 @@ class NewsScheduler(
     private val aiSummaryProcessor: AiSummaryProcessor
 ) {
 
-    @Scheduled(fixedRate = 3600000, initialDelay = 5000)
+    @Scheduled(fixedRate = 3600000, initialDelay = 1000)
     fun runCrawlers() {
-//        fmkoreaCrawler.crawl()
+        fmkoreaCrawler.crawl()
     }
 
-    @Scheduled(fixedDelay = 600000, initialDelay = 10000)
+    @Scheduled(fixedDelay = 3600000, initialDelay = 5000)
     fun runSummary() {
         aiSummaryProcessor.analyzePendingNews()
     }

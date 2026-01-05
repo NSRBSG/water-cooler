@@ -6,7 +6,6 @@ import com.google.genai.types.Content
 import com.google.genai.types.Part
 import com.watercooler.backend.domain.news.entity.NewsItem
 import com.watercooler.backend.domain.news.repository.NewsItemRepository
-import com.watercooler.backend.global.config.ai.GeminiProperties
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
 import java.net.URI
@@ -14,8 +13,7 @@ import java.net.URI
 @Component
 class AiSummaryProcessor(
     private val newsItemRepository: NewsItemRepository,
-    private val genAiClient: Client,
-    private val geminiProperties: GeminiProperties
+    private val genAiClient: Client
 ) {
 
     @Transactional
@@ -39,22 +37,23 @@ class AiSummaryProcessor(
         val parts = mutableListOf<Part>()
 
         val promptText = """
-            You are a professional Global Trend Analyst.
-            Your goal is to extract key insights and provide a high-quality summary of posts.
-            
-            # Context & Task
-            Analyze the provided post details including title, content, and any media references.
+            You are a strictly professional briefing assistant.
+            Analyze the provided post (Title and Content) and write a **Situation Report**.
             
             # Instructions
-            1. **Language Detection**: Identify the primary language used in the 'Content' field.
-            2. **Analysis**: Extract the core message, key trends, and the tone of the post.
-            3. **Summary**: 
-               - Write the summary in the **SAME LANGUAGE** as the detected language.
-               - Focus on 'What happened', 'Why it matters', and 'Key takeaways'.
-    
-            # Post Information to Analyze
-            - **Title**: ${item.title}
-            - **Content**: ${item.content}
+            1. **Format**: Write in **plain text paragraphs only**. Do NOT use Markdown (no bold **, no headers #), no bullet points, and no intro/outro filler.
+            2. **Language**: Write in the **SAME LANGUAGE** as the post content.
+            3. **Tone**: Objective, formal, and concise (Business Report style).
+            
+            # Flow of the Report
+            Compose the summary in a logical flow:
+            - **The Issue**: Start immediately with the core event or issue that occurred.
+            - **The Details**: Explain the key facts, context, or specific numbers mentioned (e.g., reasons, figures).
+            - **The Implication**: Conclude with the impact, public reaction, or main takeaway observed in the post.
+            
+            # Post Data
+            - Title: ${item.title}
+            - Content: ${item.content}
         """.trimIndent()
 
         parts.add(Part.builder().text(promptText).build())
@@ -102,7 +101,9 @@ class AiSummaryProcessor(
     }
 
     private fun downloadImage(urlString: String): ByteArray {
-        val connection = URI(urlString).toURL().openConnection()
+        val effectiveUrl = if (urlString.startsWith("//")) "https:$urlString" else urlString
+
+        val connection = URI(effectiveUrl).toURL().openConnection()
 
         return connection.getInputStream().readBytes()
     }
