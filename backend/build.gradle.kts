@@ -45,6 +45,10 @@ dependencies {
     implementation("org.jsoup:jsoup:1.22.1")
 
     implementation("com.google.genai:google-genai:1.32.0")
+
+    implementation("org.hibernate.orm:hibernate-vector:7.2.0.Final")
+
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 }
 
 kotlin {

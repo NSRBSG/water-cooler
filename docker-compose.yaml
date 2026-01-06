@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:18.1-alpine
+    image: pgvector/pgvector:pg18
     container_name: water-cooler-db
     ports:
       - ${DB_PORT}:${DB_PORT}
@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
   redis:
     image: redis:8.4-alpine

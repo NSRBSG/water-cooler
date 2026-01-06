@@ -7,6 +7,6 @@ interface NewsItemRepository : JpaRepository<NewsItem, Long> {
 
     fun existsByLink(link: String): Boolean
 
-    fun findTop10ByAiSummaryIsNullOrderByIdAsc(): List<NewsItem>
+    fun findTop5ByIssueTitleIsNullOrderByIdAsc(): List<NewsItem>
 
 }
