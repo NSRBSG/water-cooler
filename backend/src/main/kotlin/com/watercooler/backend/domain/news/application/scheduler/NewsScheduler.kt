@@ -16,7 +16,7 @@ class NewsScheduler(
         fmkoreaCrawler.crawl()
     }
 
-    @Scheduled(fixedDelay = 3600000, initialDelay = 10000)
+    @Scheduled(fixedDelay = 60000, initialDelay = 30000)
     fun runSummary() {
         newsClusteringProcessor.processPendingNews()
     }

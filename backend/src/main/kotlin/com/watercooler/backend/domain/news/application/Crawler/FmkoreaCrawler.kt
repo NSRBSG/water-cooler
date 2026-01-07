@@ -27,7 +27,7 @@ class FmkoreaCrawler(
         val cookies = getCookies()
         Thread.sleep(Random.nextLong(1000, 2000))
 
-        for (page in 1..1) {
+        for (page in 1..2) {
             val links = getLinks(page, cookies)
 
             for (link in links) {

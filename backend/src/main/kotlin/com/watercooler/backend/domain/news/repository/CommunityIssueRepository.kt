@@ -13,7 +13,7 @@ interface CommunityIssueRepository : JpaRepository<CommunityIssue, Long> {
         SELECT * FROM community_issues
         WHERE source = :source
         AND created_at > :cutoff
-        AND (embedding <=> CAST(:vector AS vector)) < 0.15
+        AND (embedding <=> CAST(:vector AS vector)) < 0.03
         ORDER BY embedding <=> CAST(:vector AS vector) ASC
         LIMIT 1
     """, nativeQuery = true
